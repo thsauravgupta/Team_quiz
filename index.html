@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Arena - Team Competition Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-spinner"></div>
+            <h2>Loading Quiz Arena...</h2>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-container">
+                <div class="welcome-header">
+                    <h1 class="welcome-title">
+                        <i class="fas fa-trophy"></i>
+                        Quiz Arena
+                    </h1>
+                    <p class="welcome-subtitle">Competitive Team Quiz Platform</p>
+                </div>
+                
+                <div class="welcome-actions">
+                    <button class="btn btn--primary btn--lg" id="create-team-btn">
+                        <i class="fas fa-plus"></i>
+                        Create Team
+                    </button>
+                    <button class="btn btn--outline btn--lg" id="join-team-btn">
+                        <i class="fas fa-users"></i>
+                        Join Team
+                    </button>
+                </div>
+
+                <div class="welcome-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1,247</span>
+                        <span class="stat-label">Active Players</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">89</span>
+                        <span class="stat-label">Teams Online</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3,456</span>
+                        <span class="stat-label">Quizzes Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Creation Modal -->
+        <div id="team-creation-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create Your Team</h3>
+                    <button class="modal-close" id="close-create-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Team Name</label>
+                        <input type="text" class="form-control" id="team-name-input" placeholder="Enter team name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="captain-name-input" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Choose Avatar</label>
+                        <div class="avatar-selector">
+                            <div class="avatar-option active" data-avatar="👨‍💻">👨‍💻</div>
+                            <div class="avatar-option" data-avatar="👩‍💼">👩‍💼</div>
+                            <div class="avatar-option" data-avatar="👨‍🎓">👨‍🎓</div>
+                            <div class="avatar-option" data-avatar="👩‍🔬">👩‍🔬</div>
+                            <div class="avatar-option" data-avatar="👨‍⚕️">👨‍⚕️</div>
+                            <div class="avatar-option" data-avatar="👩‍🎨">👩‍🎨</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn--primary" id="create-team-confirm">Create Team</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Join Modal -->
+        <div id="team-join-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Join a Team</h3>
+                    <button class="modal-close" id="close-join-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Team Code</label>
+                        <input type="text" class="form-control" id="team-code-input" placeholder="Enter team code">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="member-name-input" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Choose Avatar</label>
+                        <div class="avatar-selector">
+                            <div class="avatar-option active" data-avatar="👨‍💻">👨‍💻</div>
+                            <div class="avatar-option" data-avatar="👩‍💼">👩‍💼</div>
+                            <div class="avatar-option" data-avatar="👨‍🎓">👨‍🎓</div>
+                            <div class="avatar-option" data-avatar="👩‍🔬">👩‍🔬</div>
+                            <div class="avatar-option" data-avatar="👨‍⚕️">👨‍⚕️</div>
+                            <div class="avatar-option" data-avatar="👩‍🎨">👩‍🎨</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn--primary" id="join-team-confirm">Join Team</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Lobby Screen -->
+        <div id="lobby-screen" class="screen">
+            <div class="lobby-container">
+                <div class="lobby-header">
+                    <div class="team-info">
+                        <h2 id="lobby-team-name">Team Name</h2>
+                        <div class="team-code">
+                            <span>Team Code: </span>
+                            <code id="team-code-display">ABC123</code>
+                            <button class="btn btn--sm" id="copy-code-btn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lobby-actions">
+                        <button class="btn btn--outline" id="leave-team-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Leave Team
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lobby-content">
+                    <div class="team-members-section">
+                        <h3>Team Members</h3>
+                        <div id="team-members-list" class="team-members-list">
+                            <!-- Members will be populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="lobby-chat">
+                        <h3>Team Chat</h3>
+                        <div id="chat-messages" class="chat-messages">
+                            <!-- Chat messages will be populated dynamically -->
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" class="form-control" id="chat-input" placeholder="Type a message...">
+                            <button class="btn btn--primary" id="send-message-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-settings">
+                        <h3>Quiz Settings</h3>
+                        <div class="setting-item">
+                            <label class="form-label">Question Count</label>
+                            <select class="form-control" id="question-count-select">
+                                <option value="5">5 Questions</option>
+                                <option value="10" selected>10 Questions</option>
+                                <option value="15">15 Questions</option>
+                                <option value="20">20 Questions</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label class="form-label">Categories</label>
+                            <div class="categories-grid">
+                                <div class="category-option active" data-category="Technology">
+                                    <i class="fas fa-laptop-code"></i>
+                                    Technology
+                                </div>
+                                <div class="category-option active" data-category="Science">
+                                    <i class="fas fa-flask"></i>
+                                    Science
+                                </div>
+                                <div class="category-option active" data-category="Geography">
+                                    <i class="fas fa-globe"></i>
+                                    Geography
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lobby-footer">
+                    <button class="btn btn--primary btn--lg btn--full-width" id="start-quiz-btn">
+                        <i class="fas fa-play"></i>
+                        Start Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quiz-progress-fill"></div>
+                        </div>
+                        <span id="question-counter">1 / 10</span>
+                    </div>
+                    <div class="quiz-timer">
+                        <div class="timer-circle">
+                            <span id="timer-display">15</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-content">
+                    <div class="question-card">
+                        <div class="question-category" id="question-category">Technology</div>
+                        <h2 class="question-text" id="question-text">What does HTML stand for?</h2>
+                        <div class="question-options" id="question-options">
+                            <!-- Options will be populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-footer">
+                    <div class="team-scores-mini">
+                        <div class="mini-score" id="team-score-display">
+                            <span class="team-name">Your Team</span>
+                            <span class="score">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-container">
+                <div class="results-header">
+                    <h1>Quiz Complete!</h1>
+                    <div class="results-trophy">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                </div>
+
+                <div class="results-content">
+                    <div class="final-leaderboard">
+                        <h3>Final Rankings</h3>
+                        <div id="final-rankings" class="rankings-list">
+                            <!-- Rankings will be populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="team-analytics">
+                        <h3>Team Performance</h3>
+                        <div class="analytics-grid">
+                            <div class="analytics-item">
+                                <div class="analytics-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div class="analytics-content">
+                                    <span class="analytics-value" id="accuracy-percentage">85%</span>
+                                    <span class="analytics-label">Accuracy</span>
+                                </div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="analytics-content">
+                                    <span class="analytics-value" id="avg-response-time">3.2s</span>
+                                    <span class="analytics-label">Avg Response</span>
+                                </div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-icon">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div class="analytics-content">
+                                    <span class="analytics-value" id="best-streak">7</span>
+                                    <span class="analytics-label">Best Streak</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-footer">
+                    <button class="btn btn--outline" id="view-details-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        View Details
+                    </button>
+                    <button class="btn btn--primary" id="play-again-btn">
+                        <i class="fas fa-redo"></i>
+                        Play Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Leaderboard (Overlay) -->
+        <div id="live-leaderboard" class="leaderboard-overlay">
+            <div class="leaderboard-content">
+                <h3>Live Rankings</h3>
+                <div id="live-rankings" class="rankings-list">
+                    <!-- Live rankings will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Container -->
+        <div id="notifications-container" class="notifications-container">
+            <!-- Notifications will be added dynamically -->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
